@@ -1,0 +1,332 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/user/hardhatSolidityFolder/RapOffWeb3/Backend/contracts/Betting.sol": {
+      "lastModificationDate": 1685394884926,
+      "contentHash": "ec087c359a0d5438a49071847aab3889",
+      "sourceName": "contracts/Betting.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Betting"
+      ]
+    },
+    "/Users/user/hardhatSolidityFolder/RapOffWeb3/Backend/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1684176245577,
+      "contentHash": "e436cea06129be2c73cda4b1acc848b5",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "/Users/user/hardhatSolidityFolder/RapOffWeb3/Backend/node_modules/@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol": {
+      "lastModificationDate": 1684325187477,
+      "contentHash": "da5a0c3bd86c896f6a407f909c57edf3",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "LinkTokenInterface"
+      ]
+    },
+    "/Users/user/hardhatSolidityFolder/RapOffWeb3/Backend/node_modules/@openzeppelin/contracts/utils/Context.sol": {
+      "lastModificationDate": 1684176245422,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Context"
+      ]
+    },
+    "/Users/user/hardhatSolidityFolder/RapOffWeb3/Backend/contracts/VotingContract.sol": {
+      "lastModificationDate": 1685528897882,
+      "contentHash": "8181085f2102a18ac88a9aeda8740b8b",
+      "sourceName": "contracts/VotingContract.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "hardhat/console.sol",
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol",
+        "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol",
+        "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "VotingContract"
+      ]
+    },
+    "/Users/user/hardhatSolidityFolder/RapOffWeb3/Backend/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1684149869994,
+      "contentHash": "4ff3cd2f6272c9a6516e9ee4f2b967d3",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">= 0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
+      ]
+    },
+    "/Users/user/hardhatSolidityFolder/RapOffWeb3/Backend/node_modules/@openzeppelin/contracts/utils/Counters.sol": {
+      "lastModificationDate": 1684176245423,
+      "contentHash": "74654e3ae5d7f39555055dfe244dab7a",
+      "sourceName": "@openzeppelin/contracts/utils/Counters.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Counters"
+      ]
+    },
+    "/Users/user/hardhatSolidityFolder/RapOffWeb3/Backend/node_modules/@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol": {
+      "lastModificationDate": 1684325187730,
+      "contentHash": "eb9cc526ef59dfc4d644f56ddca0633a",
+      "sourceName": "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.4"
+      ],
+      "artifacts": [
+        "VRFConsumerBaseV2"
+      ]
+    },
+    "/Users/user/hardhatSolidityFolder/RapOffWeb3/Backend/node_modules/@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol": {
+      "lastModificationDate": 1684325187758,
+      "contentHash": "8c9ed3426b676f67ee200a2bec96e224",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VRFCoordinatorV2Interface"
+      ]
+    }
+  }
+}

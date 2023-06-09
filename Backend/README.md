@@ -1,13 +1,12 @@
-# Sample Hardhat Project
+# ToDo:
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+Betting contract :
+  Space and Time sends realtime notification(event) of the end of the live match to chainlink automation service to automation functions in the smartcontracts (Betting and VotingContract)
 
-Try running some of the following tasks:
+  Chainlink Direct request integration
+  My smartcontract can access external data and APIs from Space and Time
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+# Automation of the Betting contract(method:rapperWinFundDistribution ), VotingContract(method:rapperWinFundDistribution )
+  Smartcontract===send request===>Chainklink node== retrieval====>Space and Time datawarehouse
+    SmartContract<========Chainlink node <==fetches==Space and Time data warehouse
+                                                            

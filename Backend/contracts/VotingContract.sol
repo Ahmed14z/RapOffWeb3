@@ -5,7 +5,7 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-//import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "./Betting.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
@@ -13,7 +13,7 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 //THIS IS THE OFFICIAL VOTING CONTRACT OF RAPOFFWEB3 : Voting, Chainlink VRF
 //SEPOLIA TESTNET
 
-contract VotingContract is Ownable, VRFConsumerBaseV2 {
+contract VotingContract is Ownable, Betting,VRFConsumerBaseV2 {
     //Interface necessary for chainlink VRF
     VRFCoordinatorV2Interface COORDINATOR;
 
@@ -46,10 +46,12 @@ contract VotingContract is Ownable, VRFConsumerBaseV2 {
         address _address,
         uint256 voteCount
     );
+     //create winner struct
+    Rapper public Winner;
 
     //necessary initialization for chainlink VRF
     address vrfCoordinator = 0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625;
-    address link_token_contract = 0x779877A7B0D9E8603169DdbD7836e478b4624789;
+    // link_token_contract = 0x779877A7B0D9E8603169DdbD7836e478b4624789;
     bytes32 keyHash =
         0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c;
     uint32 callbackGasLimit = 100000;
@@ -64,9 +66,7 @@ contract VotingContract is Ownable, VRFConsumerBaseV2 {
     uint256 public s_requestId;
     uint64 public s_subscriptionId;
 
-    //create winner struct
-    Rapper public Winner;
-
+    
     //create the array of addresses of all rappers
     address[] public rapperAddresses;
 
@@ -303,6 +303,8 @@ contract VotingContract is Ownable, VRFConsumerBaseV2 {
                 Winner = rapperMapping[rapperAddresses[i++]];
             }
         }
+        super.rapperWinFundDistribution(Winner.rapperID - 1);
+
         requestRandomWords();
     }
 }

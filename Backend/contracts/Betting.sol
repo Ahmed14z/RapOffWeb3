@@ -2,16 +2,15 @@
 
 pragma solidity ^0.8.9;
 
+
+//ownable contract from openzeppelin
 import "@openzeppelin/contracts/access/Ownable.sol";
+
+//LinkTokenInterface
 import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
 
 contract Betting is Ownable {
-    //how to calculate the stake in each betting
-    //the user will enter the amount they wanna bet in LINK token
-    //place a bet
-    //the contract has to know who won
-    //send the money to the bettors who staked on the winner
-
+    
     struct Bettors {
         address bettor;
         uint256 amountBet;
@@ -28,10 +27,15 @@ contract Betting is Ownable {
     }
     address link_token_contract = 0x779877A7B0D9E8603169DdbD7836e478b4624789;
     LinkTokenInterface LINKTOKEN = LinkTokenInterface(link_token_contract);
+
     //array of rappers
     Rappers[] public rappersArray;
 
     event RappersEvent(string indexed name);
+
+
+
+    //this method 
 
     function setRapper(string memory _name) external onlyOwner {
         address[] memory rap;
@@ -40,7 +44,7 @@ contract Betting is Ownable {
     }
 
     function betOnRapper(uint256 _rapperIndex, uint256 amount) public {
-        require(amount > 0, "you must bet with some link token");
+        require(amount > 3, "you must bet with  3 link tokens");
 
         //the msg.sender must approve the contract
         LINKTOKEN.transferFrom(msg.sender, address(this), amount);
@@ -71,7 +75,7 @@ contract Betting is Ownable {
             ) {
                 bettorsAddress = rappersArray[_rapperIndex].rapperBettors[i];
                 userBet = mapBettors[bettorsAddress].amountBet;
-                winnerBet = rappersArray[_rapperIndex].amountBetOn;
+                winnerBet = rappersArray[0].amountBetOn;
                 loserBet = rappersArray[1].amountBetOn;
 
                 div =
@@ -88,7 +92,7 @@ contract Betting is Ownable {
             ) {
                 bettorsAddress = rappersArray[_rapperIndex].rapperBettors[i];
                 userBet = mapBettors[bettorsAddress].amountBet;
-                winnerBet = rappersArray[_rapperIndex].amountBetOn;
+                winnerBet = rappersArray[1].amountBetOn;
                 loserBet = rappersArray[0].amountBetOn;
 
                 div =

@@ -19,13 +19,7 @@ module.exports = {
       url: `${process.env.API_URL}`,
       accounts: [`${process.env.PRIVATE_KEY}`],
     },
-    mantle: {
-      url: "https://rpc.testnet.mantle.xyz/",
-      chainId: 5001,
-      accounts: [
-        "0x5e2f1327a7bd0e106c9bb265dbe362aef5144f1e5525deb07f729deae7e63b1d",
-      ],
-    
-    },
+
+   
   },
 };
