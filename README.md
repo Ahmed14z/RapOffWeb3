@@ -10,13 +10,14 @@ We will also offer additional features such as league administration, digital & 
 
 
 # Current implementations
-A VotingContract.sol which is the core of the project- this handles the decentralised voting. Users can vote on the favorite rapper with some LINk token
-A Betting.sol contract on Sepolia testnet that handles money staked on Rappers in LINK token
-Future implementations
-Hosting the stream live rap battle on Space and Time (A decentralized data warehouse)
-We will also offer additional features such as league administration, digital & QR code ticketing, merchandising, ad leads, and more to registered leagues.
-NFT integration
-Automation and Verifiable Random Generator using Chainlink Oracle
+1. A VotingContract.sol which is the core of the project- this handles the decentralised voting. Users can vote on the favorite rapper with some LINk token
+2. A Betting.sol contract on Sepolia testnet that handles money staked on Rappers in LINK token
+3. Verifiable Random Generator using Chainlink VRF
+# Future implementations
+1. Hosting the stream live rap battle on Space and Time (A decentralized data warehouse)
+2. We will also offer additional features such as league administration, digital & QR code ticketing, merchandising, ad leads, and more to registered leagues.
+3. NFT integration
+4. Automation using Space and Time integration with chainlink Oracle
 # CURRENT TECH STACK
 1. Solidity
 2. Chainlink
