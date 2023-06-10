@@ -18,8 +18,8 @@ We will also offer additional features such as league administration, digital & 
 NFT integration
 Automation and Verifiable Random Generator using Chainlink Oracle
 # CURRENT TECH STACK
-Solidity
-Chainlink
-Space and Time integration
-Swift (IOS DApp)
-Figma design https://www.figma.com/proto/ke1gjWSQR4M446ixf3mT2g/Gideon?node-id=7788%3A67826&scaling=min-zoom
+1. Solidity
+2. Chainlink
+3. Space and Time integration
+4. Swift (IOS DApp)
+5. Figma design https://www.figma.com/proto/ke1gjWSQR4M446ixf3mT2g/Gideon?node-id=7788%3A67826&scaling=min-zoom
