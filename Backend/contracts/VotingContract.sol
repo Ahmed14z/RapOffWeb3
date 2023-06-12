@@ -4,26 +4,27 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "hardhat/console.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Betting.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
+
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 //THIS IS THE OFFICIAL VOTING CONTRACT OF RAPOFFWEB3 : Voting, Chainlink VRF
 //SEPOLIA TESTNET
 
-contract VotingContract is Ownable, Betting,VRFConsumerBaseV2 {
+contract VotingContract is Betting, VRFConsumerBaseV2 {
     //Interface necessary for chainlink VRF
     VRFCoordinatorV2Interface COORDINATOR;
-
-    //link token interface
-    LinkTokenInterface LINKTOKEN;
 
     //counter logic from openzeppelin
     using Counters for Counters.Counter;
     Counters.Counter public _voterId;
     Counters.Counter public _rapperId;
+
+    //array of addresses that voted for each Rapper
+    address[] public votedForRapper;
 
     //Struct for Rapper
     struct Rapper {
@@ -46,7 +47,7 @@ contract VotingContract is Ownable, Betting,VRFConsumerBaseV2 {
         address _address,
         uint256 voteCount
     );
-     //create winner struct
+    //create winner struct
     Rapper public Winner;
 
     //necessary initialization for chainlink VRF
@@ -59,14 +60,13 @@ contract VotingContract is Ownable, Betting,VRFConsumerBaseV2 {
     uint16 requestConfirmations = 3;
 
     //requesting 10 random values from chainlink VRF to reward 10 random voters of the winner
-    uint32 numWords = 10;
+    uint32 numWords = 3;
 
     // Storage parameters
     uint256[] public s_randomWords;
     uint256 public s_requestId;
     uint64 public s_subscriptionId;
 
-    
     //create the array of addresses of all rappers
     address[] public rapperAddresses;
 
@@ -101,12 +101,16 @@ contract VotingContract is Ownable, Betting,VRFConsumerBaseV2 {
     );
 
     //declaring the contract constructor
-    constructor() VRFConsumerBaseV2(vrfCoordinator) {
+    constructor(uint64 subscriptionId)
+        VRFConsumerBaseV2(0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625)
+    {
         COORDINATOR = VRFCoordinatorV2Interface(vrfCoordinator);
         LINKTOKEN = LinkTokenInterface(link_token_contract);
 
+        s_subscriptionId = subscriptionId;
+
         //Create a new subscription when you deploy the contract.
-        createNewSubscription();
+        //createNewSubscription();
     }
 
     //initialize rapper
@@ -134,12 +138,8 @@ contract VotingContract is Ownable, Betting,VRFConsumerBaseV2 {
             addr
         );
         rapperAddresses.push(_address);
+        votedForRapper = rapperMapping[_address].rapperVotersArray;
         emit rapperEvent(idNumber, _name, _image, _ipfs, _address, 0);
-    }
-
-    //function to return all rapper addresses
-    function getRapperAddresses() public view returns (address[] memory) {
-        return rapperAddresses;
     }
 
     //function to return the number of rappers
@@ -178,8 +178,8 @@ contract VotingContract is Ownable, Betting,VRFConsumerBaseV2 {
         string memory _image,
         string memory _ipfs,
         uint256 amount
-    ) public payable {
-        require(amount >= 3 * 10**18, "minimum required LINK token is 3");
+    ) public {
+        require(amount >= 1 * 10**15, "minimum required LINK token is 3");
 
         //the user must approve the contract to successfully call transferFrom
         LINKTOKEN.transferFrom(msg.sender, address(this), amount);
@@ -221,29 +221,30 @@ contract VotingContract is Ownable, Betting,VRFConsumerBaseV2 {
         );
     }
 
-    //this returns the number of voters
-    function getNumberOfAllVoters() public view returns (uint256) {
-        return voterAddresses.length;
-    }
-
     // Assumes the subscription is funded sufficiently.
-    function requestRandomWords() private onlyOwner {
+    function requestRandomWords()
+        external
+        onlyOwner
+        returns (uint256 requestId)
+    {
         // Will revert if subscription is not set and funded.
-        s_requestId = COORDINATOR.requestRandomWords(
+        requestId = COORDINATOR.requestRandomWords(
             keyHash,
             s_subscriptionId,
             requestConfirmations,
             callbackGasLimit,
             numWords
         );
+        return requestId;
     }
 
     //the chainlink triggers the method with an event
+
     function fulfillRandomWords(
-        uint256, /* requestId */
-        uint256[] memory randomWords
+        uint256, /*_requestId,*/
+        uint256[] memory _randomWords
     ) internal override {
-        s_randomWords = randomWords;
+        s_randomWords = _randomWords;
         //random value returned by chainlink VRF
         uint256 randomValue;
         //the total balance of LINK in the contract
@@ -251,37 +252,21 @@ contract VotingContract is Ownable, Betting,VRFConsumerBaseV2 {
 
         //the total amount to disburse the voters will be assumed 80% of the total link in the contract
         uint256 amountTo_disburse_voters;
+        totalLink_in_the_contract = LINKTOKEN.balanceOf(address(this));
+        amountTo_disburse_voters =
+            totalLink_in_the_contract -
+            (20 * totalLink_in_the_contract) /
+            100;
 
         for (uint256 i = 0; i < s_randomWords.length; i++) {
-            randomValue = s_randomWords[i] % (Winner.voteCount + 1);
-            totalLink_in_the_contract = LINKTOKEN.balanceOf(address(this));
-            amountTo_disburse_voters =
-                totalLink_in_the_contract -
-                (20 * totalLink_in_the_contract) /
-                100;
+            randomValue = s_randomWords[i] % (Winner.voteCount);
 
             //divide equally among random 10 voters selected from the chainlink VRF and transfer to each
             LINKTOKEN.transfer(
-                Winner.rapperVotersArray[randomValue],
+                votedForRapper[randomValue],
                 amountTo_disburse_voters / 10
             );
         }
-    }
-
-    // Create a new subscription when the contract is initially deployed.
-    function createNewSubscription() private onlyOwner {
-        s_subscriptionId = COORDINATOR.createSubscription();
-        // Add this contract as a consumer of its own subscription.
-        COORDINATOR.addConsumer(s_subscriptionId, address(this));
-    }
-
-    // 1000000000000000000 = 1 LINK
-    function topUpSubscription(uint256 amount) external onlyOwner {
-        LINKTOKEN.transferAndCall(
-            address(COORDINATOR),
-            amount,
-            abi.encode(s_subscriptionId)
-        );
     }
 
     // 1000000000000000000 = 1 LINK
@@ -296,15 +281,13 @@ contract VotingContract is Ownable, Betting,VRFConsumerBaseV2 {
         for (uint256 i = 0; i < rapperAddresses.length - 1; i++) {
             if (
                 rapperMapping[rapperAddresses[i]].voteCount >=
-                rapperMapping[rapperAddresses[i++]].voteCount
+                rapperMapping[rapperAddresses[i + 1]].voteCount
             ) {
                 Winner = rapperMapping[rapperAddresses[i]];
             } else {
-                Winner = rapperMapping[rapperAddresses[i++]];
+                Winner = rapperMapping[rapperAddresses[i + 1]];
             }
         }
         super.rapperWinFundDistribution(Winner.rapperID - 1);
-
-        requestRandomWords();
     }
 }
